@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -84,7 +86,7 @@ public class MultiModelManager extends FileLoaderBase {
     @Override
     public boolean load(File pFile, String pFileName, InputStream pInputStream) {
         //		MMMLib.Debug("loadTexture:%s, %s", pFile.toString(), pFileName);
-        return addModelClass(pFileName, pInputStream) || addTexture(pFile, pFileName);
+        return addModelClass(pFile, pFileName, pInputStream) || addTexture(pFile, pFileName);
     }
 
     /**
@@ -94,7 +96,7 @@ public class MultiModelManager extends FileLoaderBase {
      * @return
      */
     @SuppressWarnings("unchecked")
-    protected boolean addModelClass(String pFileName, InputStream stream) {
+    protected boolean addModelClass(File pFile, String pFileName, InputStream stream) {
         if (pFileName.endsWith(".class") && pFileName.indexOf("$") == -1) {
             // TODO この辺調整
             if (pFileName.indexOf("ModelMulti") == -1 && pFileName.indexOf("ModelLittleMaid") == -1) {
@@ -107,19 +109,27 @@ public class MultiModelManager extends FileLoaderBase {
             lcname = lcname.replace("/", ".");
             MMMLib.Debug("try MultiModelClass: %s", lcname);
             try {
-                ClassLoader lcl = getClass().getClassLoader();
-                Class<?> lc = lcl.loadClass(lcname);
-                //ClassReader p = new ClassReader(stream);
-                //Class<?> lc = Class.forName(p.getClassName().replace('/', '.'));
-                if (AbstractModelBase.class.isAssignableFrom(lc) && !Modifier.isAbstract(lc.getModifiers())) {
-                    Class<? extends AbstractModelBase> lca = (Class<? extends AbstractModelBase>) lc;
-                    int lindex = lcname.lastIndexOf('_');
-                    if (lindex > -1) {
-                        String lname = lcname.substring(lindex + 1, lcname.length());
-                        models.put(lcname, getModelBase(lca));
-                        modelNames.put(lname, lcname);
-                        MMMLib.Debug("get MultiModelClass: %s(%s)", lname, lcname);
-                        return true;
+                ClassLoader lcl = null;
+                if (0 < lcname.indexOf(".")) {
+                    //内部用
+                    lcl = getClass().getClassLoader();
+                } else {
+                    //アーカイブなど外部用
+                    URL[] urls = { pFile.toURI().toURL() };
+                    lcl = URLClassLoader.newInstance(urls, getClass().getClassLoader());
+                }
+                if (lcl != null) {
+                    Class<?> lc = lcl.loadClass(lcname);
+                    if (AbstractModelBase.class.isAssignableFrom(lc) && !Modifier.isAbstract(lc.getModifiers())) {
+                        Class<? extends AbstractModelBase> lca = (Class<? extends AbstractModelBase>) lc;
+                        int lindex = lcname.lastIndexOf('_');
+                        if (lindex > -1) {
+                            String lname = lcname.substring(lindex + 1, lcname.length());
+                            models.put(lcname, getModelBase(lca));
+                            modelNames.put(lname, lcname);
+                            MMMLib.Debug("get MultiModelClass: %s(%s)", lname, lcname);
+                            return true;
+                        }
                     }
                 }
             } catch (Exception e) {
