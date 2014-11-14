@@ -79,8 +79,8 @@ public class RenderMultiModel extends RenderLiving {
                 ResourceLocation[] loc = new ResourceLocation[] { modelContainer.getArmorTexture(MultiModelManager.tx_armor1, is), modelContainer.getArmorTexture(MultiModelManager.tx_armor1, is), modelContainer.getArmorTexture(MultiModelManager.tx_armor2, is), modelContainer.getArmorTexture(MultiModelManager.tx_armor2, is) };
                 modelFATT.textureInner = loc;
                 modelFATT.textureOuter = loc;
-                //modelFATT.textureInnerLight = ltentity.getTextures(3);
-                //modelFATT.textureOuterLight = ltentity.getTextures(4);
+                modelFATT.textureInnerLight = loc;
+                modelFATT.textureOuterLight = loc;
             }
             modelFATT.textureLightColor = (float[]) modelFATT.getCapsValue(IModelCaps.caps_textureLightColor, pEntityCaps);
 

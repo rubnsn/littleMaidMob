@@ -2,6 +2,7 @@ package mmm.littleMaidMob;
 
 import java.io.File;
 
+import mmm.lib.EntitySelect;
 import mmm.lib.ProxyCommon;
 import mmm.lib.multiModel.MultiModelHandler;
 import mmm.lib.multiModel.texture.MultiModelData;
@@ -105,6 +106,7 @@ public class littleMaidMob {
 
         MultiModelHandler.init();
         MultiModelHandler.instance.registerEntityClass(EntityLittleMaidBase.class, MultiModelData.class, "default");
+        MultiModelHandler.instance.registerEntityClass(EntitySelect.class, MultiModelData.class, "default");
     }
 
     @Mod.EventHandler

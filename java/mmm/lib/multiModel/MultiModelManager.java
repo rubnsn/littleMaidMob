@@ -50,7 +50,7 @@ public class MultiModelManager extends FileLoaderBase {
     protected AbstractModelBase[] defaultModel;
     protected Map<String, AbstractModelBase[]> models;
     protected Map<String, String> modelNames;
-    protected TreeMap<String, MultiModelContainer> textures;
+    public TreeMap<String, MultiModelContainer> textures;
     protected List<String> preFixs;
 
     public MultiModelManager() {

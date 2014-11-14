@@ -13,7 +13,9 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
@@ -138,13 +140,13 @@ public class GuiLittleMaidInventory extends GuiEffectRenderer {
     protected void actionPerformed(GuiButton par1GuiButton) {
         switch (par1GuiButton.id) {
         case 100:
-            System.out.println("next!");
+            //System.out.println("next!");
             maid.getMultiModel().setNextTexturePackege();
             //maid.getMultiModel().setNextTexturePackege(0);
             //maid.getMultiModel().setTextureNames();
             break;
         case 101:
-            System.out.println("prev!");
+            //System.out.println("prev!");
             maid.getMultiModel().setPrevTexturePackege();
             //maid.getMultiModel().setPrevTexturePackege(0);
             //maid.getMultiModel().setTextureNames();
@@ -158,20 +160,19 @@ public class GuiLittleMaidInventory extends GuiEffectRenderer {
             //maid.getMultiModel().setTextureNames();
             break;
         case 200:
-            /*
             int ldye = 0;
             if (mc.thePlayer.capabilities.isCreativeMode) {
                 ldye = 0xffff;
             } else {
                 for (ItemStack lis : mc.thePlayer.inventory.mainInventory) {
-                    if (lis != null && lis.itemID == Item.dyePowder.itemID) {
+                    if (lis != null && lis.getItem() == Items.dye) {
                         ldye |= (1 << (15 - lis.getItemDamage()));
                     }
                 }
             }
-            isChangeTexture = false;
-            mc.displayGuiScreen(new LMM_GuiTextureSelect(this, maid.getMultiModel(), ldye, true));
-            */
+            //isChangeTexture = false;
+            mc.displayGuiScreen(new GuiTextureSelect(this, maid, ldye, true));
+
         }
     }
 

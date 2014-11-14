@@ -23,15 +23,24 @@ public class MultiModelContainer {
     public int[] defaultVisivles = new int[16];
 
     /** バインドされているモデルクラス */
-    protected AbstractModelBase[] defaultModel;
-    protected Map<Integer, AbstractModelBase[]> models;
+    public AbstractModelBase[] defaultModel;
+    public Map<Integer, AbstractModelBase[]> models;
     /** バインドされているテクスチャ */
     protected TreeMap<Integer, ResourceLocation> textures;
     /** バインドされているアーマーテクスチャ */
-    protected Map<String, Map<Integer, ResourceLocation>> armors;
+    public Map<String, Map<Integer, ResourceLocation>> armors;
     protected boolean isDecodeJSON;
     protected int colorContracts;
     protected int colorWilds;
+
+    public MultiModelContainer() {
+        models = new HashMap<Integer, AbstractModelBase[]>();
+        textures = new TreeMap<Integer, ResourceLocation>();
+        armors = new HashMap<String, Map<Integer, ResourceLocation>>();
+        colorContracts = -1;
+        colorWilds = -1;
+
+    }
 
     public MultiModelContainer(String pName) {
         name = pName;

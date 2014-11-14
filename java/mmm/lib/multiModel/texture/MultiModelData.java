@@ -419,4 +419,8 @@ public class MultiModelData implements IExtendedEntityProperties {
         }
     }
 
+    public MultiModelContainer[] getMultiModelContainer() {
+        return new MultiModelContainer[] { model, armor };
+    }
+
 }
