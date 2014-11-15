@@ -30,6 +30,14 @@ public class InventoryLittleMaid extends InventoryPlayer {
         prevItems = new ItemStack[mainInventory.length + armorInventory.length];
     }
 
+    @Override
+    public boolean addItemStackToInventory(final ItemStack p_70441_1_) {
+        if (player == null) {
+            player = maid.avatar;
+        }
+        return super.addItemStackToInventory(p_70441_1_);
+    }
+
     /***/
     public ItemStack armorItemInSlot(int p_70440_1_) {
         return this.armorInventory[p_70440_1_];

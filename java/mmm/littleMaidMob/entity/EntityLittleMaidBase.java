@@ -103,6 +103,8 @@ public class EntityLittleMaidBase extends EntityTameable implements
     public SwingController swingController;
     /** おしごとかうんたー */
     private Counter mstatWorkingCount;
+    //おーばーどらいぶ
+    public Counter maidOverDriveTime;
     // 首周り
     private boolean looksWithInterest;
     private boolean looksWithInterestAXIS;
@@ -136,6 +138,7 @@ public class EntityLittleMaidBase extends EntityTameable implements
             avatar = new EntityLittleMaidAvatar((WorldServer) par1World, new GameProfile(null, "littleMaidMob"));
             avatar.setOwner(this);
             avatar.inventory = inventory;
+            inventory.player = avatar;
         }
         swingController = new SwingController(this);
         registerExtendedProperties("swingController", swingController);
@@ -144,6 +147,7 @@ public class EntityLittleMaidBase extends EntityTameable implements
         tiles = new TileContainer(this);
         registerExtendedProperties("maidTiles", tiles);
         mstatWorkingCount = new Counter(11, 10, -10);
+        maidOverDriveTime = new Counter(5, 300, -100);
         maidDamegeSound = EnumSound.hurt;
         maidSoundInterval = 0;
         //		multiModel = MultiModelManager.instance.getMultiModel("MMM_SR2");
@@ -1727,4 +1731,9 @@ public class EntityLittleMaidBase extends EntityTameable implements
         return mstatPlanter;
     }
 
+    //可視化
+    @Override
+    public boolean isMovementCeased() {
+        return super.isMovementCeased();
+    }
 }

@@ -19,6 +19,7 @@ public class ModeManager {
     public void init() {
         this.addModes(ModeBasic.class);
         this.addModes(ModeFencer.class);
+        this.addModes(ModeRipper.class);
     }
 
     /**
